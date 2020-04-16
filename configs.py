@@ -35,7 +35,7 @@ class Config:
         self.parser.add_argument('--beta1', type=float, default=0.5, help='Adam momentum')
 
         # GPU
-        self.parser.add_argument('--gpu_id', type=int, default=0, help='gpu id number')
+        self.parser.add_argument('--gpu_id', type=int, default=3, help='gpu id number')
 
         # Kernel post processing
         self.parser.add_argument('--n_filtering', type=float, default=40, help='Filtering small values of the kernel')
@@ -62,11 +62,14 @@ class Config:
 
     def set_gpu_device(self):
         """Sets the GPU device if one is given"""
+        torch.cuda.set_device(self.conf.gpu_id)
+        '''
         if os.environ.get('CUDA_VISIBLE_DEVICES', '') == '':
             os.environ['CUDA_VISIBLE_DEVICES'] = str(self.conf.gpu_id)
             torch.cuda.set_device(0)
         else:
             torch.cuda.set_device(self.conf.gpu_id)
+        '''
 
     def set_output_directory(self):
         """Define the output directory name and create the folder"""
